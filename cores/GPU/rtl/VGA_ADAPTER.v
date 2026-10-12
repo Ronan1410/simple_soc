@@ -7,6 +7,9 @@ module VGA_ADAPTER(
     input GD,
     input BD,
 
+    input [9:0] res_x,
+    input [8:0] res_y,
+
     output [9:0] x,
     output [8:0] y,
 
@@ -20,8 +23,9 @@ reg [8:0] CounterY;
 
 reg vga_HS, vga_VS;
 
-wire CounterXmaxed = (CounterX == 799);
-wire CountetYmaxed = (CounterY == 524);
+
+wire CounterXmaxed = (CounterX == res_x);
+wire CountetYmaxed = (CounterY == res_y);
 
 assign x = CounterX;
 assign y = CounterY;

@@ -15,6 +15,9 @@ module GPU_core(
     output R,
     output G,
     output B
+
+    output reg [9:0] res_x,
+    output reg [8:0] res_y
 );
 
 reg [3:0] cbyte;
@@ -29,6 +32,11 @@ assign B = ccolor;
 reg ss;
 
 wire [7:0] sline;
+
+initial begin
+    res_x <= 799;
+    res_y <= 479;
+end
 
 V_RAM vram(clk, 16'b0, cc_code, {4'd240 - y[7:4], x[8:3]}, 16'h0, 1'b0, 1'b0, char_code);
 
