@@ -8,7 +8,7 @@ module DIGITS(
     input wire[31:0] W_ADDR,
 
     output reg[31:0] W_DAT_O,
-    output wire W_ACK
+    output wire W_ACK,
 
     output reg[7:0] hex,
     output reg[7:0] dig
@@ -26,7 +26,7 @@ assign W_ACK = ack;
 
 initial begin
     data = 32'h01234567;
-    dig - 8'b0000_0000;
+    dig = 8'b0000_0000;
 end
 
 always @(posedge clk) begin

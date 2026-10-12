@@ -3,7 +3,7 @@ module WB_CONTROLLER(
     input rst,
 
     output wire W_CLK,
-    oupput wire W_RST
+    output wire W_RST
 );
 
 reg [3:0] t;

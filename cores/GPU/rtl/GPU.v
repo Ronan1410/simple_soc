@@ -1,7 +1,7 @@
 module GPU_core(
     input btn1,
     input btn2,
-    input clk
+    input clk,
 
     input wire [31:0] W_ADDR,
     input wire [31:0] W_DAT_I,
@@ -27,7 +27,7 @@ reg ss;
 
 wire [7:0] sline;
 
-V_RAM vram(clk, 16'b0, cc_code, {4'd240 - y[7:4], x[8:3]}, 16'h0, 1'b0, 1b0, char_code);
+V_RAM vram(clk, 16'b0, cc_code, {4'd240 - y[7:4], x[8:3]}, 16'h0, 1'b0, 1'b0, char_code);
 
 CHARSET charset(clk, {char_code[7:0], 4'd240 - y[3:0]}, sline);
 
