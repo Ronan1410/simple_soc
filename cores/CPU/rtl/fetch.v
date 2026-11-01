@@ -28,7 +28,7 @@ end
 always @(posedge clk)
 begin
     if(f_enable)
-        if(state[0] == 0)
+        if(state == 0)
         begin
             data_o <= 32'd234;
             read_from_bus <= 1;
@@ -47,23 +47,27 @@ end
 
 always @(posedge W_CLK) 
 begin
-    case(w_state)
+    if (read_from_bus)
+    case (w_state)
         2'b00:
-            begin
-                w_ack_local <= 0;
-                w_state <= 2'b01;
-            end
+        begin
+            W_ADDR <= addr;
+            w_state <= 2'b01;
+        end
         2'b01:
+            if (W_ACK) // wait W_BUS ack
             begin
                 w_buff <= W_DATA_I;
                 w_ack_local <= 1;
                 w_state <= 2'b10;
             end
         2'b10:
-            begin
-                w_ack_local <= 0;
-                w_state <= 2'b00;
-            end
+        begin
+            w_ack_local <= 0;
+            w_state <= 2'b00;
+        end
+        default:
+            w_ack_local <= 0;
     endcase
 end
 endmodule

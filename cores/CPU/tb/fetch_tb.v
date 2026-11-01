@@ -27,6 +27,8 @@ begin
   clk <= 0;
   #10 clk <= 1;
   #10 clk <= 0;
+  #10 clk <= 1;
+  #10 clk <= 0;
   if (data_o != 32'd24)
   begin
     $display("ERROR!");
