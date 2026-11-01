@@ -12,7 +12,7 @@ assign W_CLK = t[3];
 assign W_RST = rst;
 
 always @(posedge clk) begin
-    t = t + 1;
+    t = t + 4'b0001;
 end
 
 endmodule
