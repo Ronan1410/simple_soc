@@ -4,6 +4,7 @@ module FETCH(
     input wire_mode,
     input [31:0] addr,
     input [31:0] data_i,
+    input [1:0] thread,
     output reg [31:0] data_o,
     output reg ack,
 
@@ -16,10 +17,14 @@ module FETCH(
 );
 
 reg read_from_bus;
-reg state;
+reg [1:0] state;
 reg [1:0] w_state;
 reg w_buff;
 reg w_ack_local;
+
+wire [4:0] reg_select;
+assign reg_selsect = {thread, addr[2:0]};
+reg [31:0] registers [8 * 4 * 4];
 
 initial begin
     data_o <= 0;
@@ -28,14 +33,25 @@ end
 always @(posedge clk)
 begin
     if(f_enable)
-        if(state == 0)
+        case (state) 2'b00:
         begin
-            data_o <= 32'd234;
-            read_from_bus <= 1;
-
-            state <= 1;
+            data-o <= 32'd234;
+        case (addr[31:28]) 4'b0001:
+        begin
+            if(write_mode)
+               registers[reg_select] <= data_i;
+            else
+                data_o <= registers[reg_select];
+            ack <= 1;
         end
-        else
+        4'b0010:
+        begin
+            read_from_bus <= 1;
+        end
+        endcase
+        state <= 2'b01;
+        end
+        2'b01:
         begin
             if(w_ack_local)
             begin
@@ -43,6 +59,9 @@ begin
                 state <= 0;
             end
         end
+        endcase
+        else
+        ack <= 0;
 end
 
 always @(posedge W_CLK) 
