@@ -1,3 +1,6 @@
+`DEFINE ASSERT(a, b, t) \
+  $display("ASSERT h'%h h'%h %s", a, b, t);
+
 module fetch_tb;
 
 reg clk;
@@ -30,16 +33,9 @@ begin
   #10 clk <= 0;
   #10 clk <= 1;
   #10 clk <= 0;
-  if (data_o != 32'd24)
-  begin
-    $display("ERROR!");
-    $finish;
-  end
+  `ASSERT(data_o, 32'h1, "output must be a hz");
   #10 clk <= 1;
   #10 clk <= 0;
-
-
-
   $finish;
 end
 endmodule
